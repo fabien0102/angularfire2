@@ -11,6 +11,10 @@ To specify your authentication ahead of time, you provide the `AngularFireModule
 with an `AuthProvider` and an `AuthMethod`.
 
 ```ts
+import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
+import { AppComponent } from './app.component';
+import { AngularFireModule, AuthProviders, AuthMethods } from 'angularfire2';
 
 const myFirebaseConfig = {
   apiKey: '<your-key>',
@@ -29,10 +33,10 @@ const myFirebaseAuthConfig = {
     BrowserModule,
     AngularFireModule.initializeApp(myFirebaseConfig, myFirebaseAuthConfig)
   ],
-  declarations: [ MyComponent ],
-  boostrap: [ MyComponent ]
+  declarations: [ AppComponent ],
+  bootstrap: [ AppComponent ]
 })
-export class MyAppModule {}
+export class AppModule {}
 ```
 
 
@@ -90,7 +94,7 @@ Sample Usage:
 ## Override configuration / No config
 
 Authentication works without configuration, and even if you have setup 
-authentication in the boostrap phase, you can still override the configuration.
+authentication in the bootstrap phase, you can still override the configuration.
 
 ```ts
 // Anonymous

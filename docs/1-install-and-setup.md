@@ -99,7 +99,7 @@ import { AngularFire, FirebaseListObservable } from 'angularfire2';
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.css']
 })
-export class <MyApp>Component {
+export class AppComponent {
   constructor(af: AngularFire) {
     
   }
@@ -124,7 +124,7 @@ import { AngularFire, FirebaseListObservable } from 'angularfire2';
 export class AppComponent {
   items: FirebaseListObservable<any[]>;
   constructor(af: AngularFire) {
-    this.items = af.database.list('items');
+    this.items = af.database.list('/items');
   }
 }
 ```
