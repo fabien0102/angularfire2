@@ -3,7 +3,7 @@ import { Injectable, Inject } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Observer } from 'rxjs/Observer';
 import { FirebaseApp } from '../tokens';
-import { isPresent, ZoneScheduler } from '../utils';
+import { ZoneScheduler } from '../utils';
 import {
   authDataToAuthState,
   AuthBackend,
@@ -34,8 +34,7 @@ export class FirebaseSdkAuthBackend extends AuthBackend {
    * https://github.com/angular/angular/issues/12631
    * https://github.com/angular/angularfire2/issues/653
    **/
-  constructor( @Inject(FirebaseApp) _fbApp: any,
-    private _webWorkerMode = false) {
+  constructor(@Inject(FirebaseApp) _fbApp: any) {
     super();
     this._fbAuth = _fbApp.auth();
   }
@@ -67,8 +66,8 @@ export class FirebaseSdkAuthBackend extends AuthBackend {
     return observeOn.call(authState, new ZoneScheduler(Zone.current));
   }
 
-  unauth(): void {
-    Promise.resolve(this._fbAuth.signOut());
+  unauth(): Promise<void> {
+    return <Promise<void>>this._fbAuth.signOut();
   }
 
   authWithCustomToken(token: string): Promise<FirebaseAuthState> {

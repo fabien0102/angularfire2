@@ -79,12 +79,12 @@ export class AngularFireAuth extends ReplaySubject<FirebaseAuthState> {
     }
     config = this._mergeConfigs(config);
 
-    if (!utils.isPresent(config.method)) {
+    if (utils.isNil(config.method)) {
       return this._reject('You must provide a login method');
     }
     let providerMethods = [AuthMethods.Popup, AuthMethods.Redirect, AuthMethods.OAuthToken];
     if (providerMethods.indexOf(config.method) != -1) {
-      if (!utils.isPresent(config.provider)) {
+      if (utils.isNil(config.provider)) {
         return this._reject('You must include a provider to use this auth method.');
       }
     }
@@ -119,8 +119,8 @@ export class AngularFireAuth extends ReplaySubject<FirebaseAuthState> {
     }
   }
 
-  public logout(): void {
-    this._authBackend.unauth();
+  public logout(): Promise<void> {
+    return this._authBackend.unauth();
   }
 
   public getAuth(): FirebaseAuthState {
@@ -185,5 +185,3 @@ function attachCredentialToAuthState (authState: FirebaseAuthState, credential, 
   authState[stripProviderId(providerId)] = credential;
   return authState;
 }
-// TODO: Deprecate
-export class FirebaseAuth extends AngularFireAuth {}

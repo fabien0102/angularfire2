@@ -7,7 +7,7 @@ of authentication, you can specify that ahead of time so you only need to call
 
 ## Configure application in bootstrap
 
-To specify your authentication ahead of time, you provide the `AngularFireModule.initializeApp` function 
+To specify your authentication ahead of time, you provide the `AngularFireModule.initializeApp` function
 with an `AuthProvider` and an `AuthMethod`.
 
 ```ts
@@ -21,12 +21,13 @@ const myFirebaseConfig = {
   authDomain: '<your-project-authdomain>',
   databaseURL: '<your-database-URL>',
   storageBucket: '<your-storage-bucket>',
-}
+  messagingSenderId: '<your-messaging-sender-id>'
+};
 
 const myFirebaseAuthConfig = {
   provider: AuthProviders.Google,
   method: AuthMethods.Redirect
-}
+};
 
 @NgModule({
   imports: [
@@ -45,7 +46,7 @@ export class AppModule {}
 If you have setup authentication in bootstrap like above, then all you need to do
 is call login on `af.auth.login()`
 
-The long exception is if you're using username and password, then you'll have
+The lone exception is if you're using username and password, then you'll have
 to call `af.auth.login()` with the user's credentials.
 
 ```ts
@@ -58,7 +59,7 @@ af.auth.login({ email: 'email', password: 'pass' });
 import { Component } from '@angular/core';
 import { AngularFire } from 'angularfire2';
 
-@Component({ 
+@Component({
   selector: 'app-root',
   template: `
   <div> {{ (af.auth | async)?.uid }} </div>
@@ -68,11 +69,11 @@ import { AngularFire } from 'angularfire2';
 })
 export class AppComponent {
   constructor(public af: AngularFire) {}
- 
- login() {
+
+  login() {
     this.af.auth.login();
   }
-  
+
   logout() {
      this.af.auth.logout();
   }
@@ -93,7 +94,7 @@ Sample Usage:
 
 ## Override configuration / No config
 
-Authentication works without configuration, and even if you have setup 
+Authentication works without configuration, and even if you have setup
 authentication in the bootstrap phase, you can still override the configuration.
 
 ```ts
@@ -101,7 +102,7 @@ authentication in the bootstrap phase, you can still override the configuration.
 af.auth.login({
   provider: AuthProviders.Anonymous,
   method: AuthMethods.Anonymous,
-})
+});
 
 // Email and password
 af.auth.login({
@@ -111,19 +112,19 @@ af.auth.login({
 {
   provider: AuthProviders.Password,
   method: AuthMethods.Password,
-})
+});
 
 // Social provider redirect
 af.auth.login({
   provider: AuthProviders.Twitter,
   method: AuthMethods.Redirect,
-})
+});
 
 // Social provider popup
 af.auth.login({
   provider: AuthProviders.Github,
   method: AuthMethods.Popup,
-})
+});
 ```
 
 **Example app:**
@@ -156,7 +157,7 @@ export class AppComponent {
     this.af.auth.login({
       provider: AuthProviders.Anonymous,
       method: AuthMethods.Anonymous,
-    });    
+    });
   }
 }
 ```
